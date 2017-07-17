@@ -1,0 +1,24 @@
+[
+  {
+    "id": 0,
+    "action": "/greeting",
+    "dispatchUI": false,
+    "method": 0,
+    "hasHeader": false,
+    "needCache": true,
+    "timeout": 15000,
+    "needLogin": true,
+    "isHttps": false
+  },
+  {
+    "id": 1,
+    "action": "/Register/registerUser",
+    "dispatchUI": false,
+    "method": 1,
+    "hasHeader": false,
+    "needCache": true,
+    "timeout": 15000,
+    "needLogin": false,
+    "isHttps": false
+  }
+]

@@ -2,10 +2,12 @@ package com.myapp.study.log;
 
 import android.util.Log;
 
+import com.myapp.study.BuildConfig;
+
 public class LogUtil {
 
     private static final String TAG = LogUtil.class.getSimpleName();
-    private static boolean isDebug = true;
+    private static boolean isDebug = BuildConfig.LOG_DEBUG;
 
     public static void v(String msg) {
         if (isDebug)

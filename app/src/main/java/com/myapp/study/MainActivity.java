@@ -3,8 +3,11 @@ package com.myapp.study;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.support.v4.util.ArrayMap;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 
 import com.facebook.common.executors.CallerThreadExecutor;
@@ -16,7 +19,11 @@ import com.facebook.imagepipeline.core.ImagePipeline;
 import com.facebook.imagepipeline.image.CloseableBitmap;
 import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.ImageRequest;
+import com.myapp.study.bean.BaseBean;
+import com.myapp.study.etc.HttpConfig;
 import com.myapp.study.log.LogUtil;
+import com.myapp.study.net.ConnectTool;
+import com.myapp.study.net.interfaces.IViewNetCallBack;
 
 import java.security.InvalidKeyException;
 import java.security.MessageDigest;
@@ -50,6 +57,11 @@ public class MainActivity extends AppCompatActivity {
 
         LogUtil.e(Base64.encodeToString("a".getBytes(), Base64.DEFAULT));
         LogUtil.e(new String(Base64.decode("YQ==".getBytes(), Base64.DEFAULT)));
+
+        if (BuildConfig.DEBUG) {
+            net();
+            return;
+        }
 
         SecureRandom sr = new SecureRandom();
         byte[] output = new byte[16];
@@ -113,6 +125,39 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+    }
+
+    private void net() {
+        ArrayMap<String, Object> arrayMap = new ArrayMap<>();
+        arrayMap.put("key", "test");
+
+        ArrayMap<String, String> arrayMap1 = new ArrayMap<>();
+        arrayMap1.put("hello", "est");
+//        arrayMap.put("data","get data");
+        try {
+            ConnectTool.httpRequestWithHeader(HttpConfig.getVerifyCode, arrayMap, arrayMap1, new IViewNetCallBack() {
+
+                @Override
+                public void onFail(Exception e) {
+                    LogUtil.e(e.getMessage());
+                }
+
+                @Override
+                public void onResponse(Parcelable result, int httpConfigId, boolean fromNet, Object o) {
+                    BaseBean baseBean = (BaseBean) result;
+                    Log.e("tag", baseBean.toString());
+                    LogUtil.e("get result:" + baseBean.toString() + Thread.currentThread().getName());
+
+                }
+
+                @Override
+                public boolean dispatchResult(String result) {
+                    return false;
+                }
+            }, BaseBean.class, "hello");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @OnClick({R.id.my_image_view})
