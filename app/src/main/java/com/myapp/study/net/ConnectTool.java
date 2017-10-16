@@ -9,7 +9,7 @@ import com.myapp.study.etc.HttpConfig;
 import com.myapp.study.etc.HttpConfigModel;
 import com.myapp.study.etc.ParseHttpParams;
 import com.myapp.study.log.LogUtil;
-import com.myapp.study.net.impl.BaseNetImpl;
+import com.myapp.study.net.impl.ViewNetCallBackProxy;
 import com.myapp.study.net.interfaces.IHttpNetRequest;
 import com.myapp.study.net.interfaces.IViewNetCallBack;
 import com.myapp.study.utils.GsonTool;
@@ -28,7 +28,7 @@ import java.util.Map;
  */
 public class ConnectTool {
 
-    public static Handler handler = new Handler(Looper.getMainLooper());
+    public final static Handler handler = new Handler(Looper.getMainLooper());
 
     public static void httpRequest(HttpConfig config, Map<String, Object> params, final IViewNetCallBack netCallBack,
                                    Class entityClass, String requestTag) throws Exception {
@@ -51,7 +51,7 @@ public class ConnectTool {
         String url = BuildConfig.API_URL + httpConfigModel.action;
 
         IHttpNetRequest callBack = NetManager.getInstance();
-        BaseNetImpl implListener = new BaseNetImpl(netCallBack, entityClass, httpConfigModel);
+        ViewNetCallBackProxy implListener = new ViewNetCallBackProxy(netCallBack, entityClass, httpConfigModel);
 
         /**
          * 需要登录的保存的token

@@ -18,13 +18,13 @@ import java.util.Map;
 /**
  * Created by lenovo on 2015/10/30.
  */
-public class BaseNetImpl implements IViewNetCallBack {
+public class ViewNetCallBackProxy implements IViewNetCallBack {
     private IViewNetCallBack listener;
     private Class entityClass;
     private HttpConfigModel httpConfigModel;
     private Map<String, Object> param;
 
-    public BaseNetImpl(IViewNetCallBack listener, Class entityClass, HttpConfigModel httpConfigModel) {
+    public ViewNetCallBackProxy(IViewNetCallBack listener, Class entityClass, HttpConfigModel httpConfigModel) {
         this.listener = listener;
         this.entityClass = entityClass;
         this.httpConfigModel = httpConfigModel;

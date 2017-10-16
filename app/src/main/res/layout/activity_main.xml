@@ -16,5 +16,11 @@
         fresco:roundAsCircle="false"
         fresco:roundedCornerRadius="10dp" />
 
+    <ImageView
+        android:id="@+id/glideImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher" />
+
 
 </LinearLayout>

@@ -17,13 +17,14 @@ import java.io.InputStream;
  * Created by lenovo on 2015/12/10.
  */
 public class MyGlideModule implements GlideModule {
+
     @Override
     public void applyOptions(final Context context, GlideBuilder builder) {
         builder.setDecodeFormat(DecodeFormat.PREFER_RGB_565);
         builder.setDiskCache(new DiskCache.Factory() {
             @Override
             public DiskCache build() {
-                return DiskLruCacheWrapper.get(context.getExternalCacheDir(), 25 * 1024 * 1024);
+                return DiskLruCacheWrapper.get(context.getExternalCacheDir(), 10 * 1024 * 1024);
             }
         });
     }

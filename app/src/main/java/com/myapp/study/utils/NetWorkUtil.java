@@ -10,14 +10,11 @@ import com.myapp.study.log.LogUtil;
 
 /**
  * 网络相关公共类
- *
- * @author liangjy
- * @version 1.0
  */
 public class NetWorkUtil {
-    public static final int NETTYPE_WIFI = 0x01;
-    public static final int NETTYPE_CMWAP = 0x02;
-    public static final int NETTYPE_CMNET = 0x03;
+    private static final int NETTYPE_WIFI = 0x01;
+    private static final int NETTYPE_CMWAP = 0x02;
+    private static final int NETTYPE_CMNET = 0x03;
 
     /**
      * 获取当前网络类型
@@ -67,8 +64,7 @@ public class NetWorkUtil {
      */
     public static NetworkInfo getNetworkInfo(Context context) {
         ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo;
+        return connectivityManager.getActiveNetworkInfo();
     }
 
     public static boolean isWifi(Context mContext) {

@@ -103,7 +103,7 @@ public class GsonTool {
      * @param t
      * @return
      */
-    public static <T> HashMap EntityToHas(T t) throws ResolveException {
+    public static <T> HashMap entityToHas(T t) throws ResolveException {
         String json = entityToJson(t);
         return jsonToHas(json);
     }

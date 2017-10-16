@@ -9,7 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.common.executors.CallerThreadExecutor;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
@@ -47,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R2.id.my_image_view)
     SimpleDraweeView myImageView;
+    @BindView(R2.id.glideImage)
+    ImageView glideImage;
     private String url = "http://img04.tooopen.com/images/20131115/sy_47505221718.jpg";
 
     @Override
@@ -58,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         LogUtil.e(Base64.encodeToString("a".getBytes(), Base64.DEFAULT));
         LogUtil.e(new String(Base64.decode("YQ==".getBytes(), Base64.DEFAULT)));
 
+        Glide.with(this).load(url).into(glideImage);
+        myImageView.setImageURI(url);
         if (BuildConfig.DEBUG) {
             net();
             return;

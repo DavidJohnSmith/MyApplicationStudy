@@ -35,7 +35,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
  * Created by lenovo on 2015/4/30.
  */
 public class NetManager implements IHttpNetRequest {
-    private static NetManager instance;
+    private volatile static NetManager instance;
     private static OkHttpClient okHttpClient;
 
     private NetManager() {
@@ -58,7 +58,6 @@ public class NetManager implements IHttpNetRequest {
                                 public Response intercept(@NonNull Chain chain) throws IOException {
                                     Request newRequest = chain.request().newBuilder()
                                             .addHeader("platform", "android")
-                                            .addHeader("user-agent", "this is dangerous")
                                             .build();
                                     return chain.proceed(newRequest);
                                 }
@@ -178,7 +177,7 @@ public class NetManager implements IHttpNetRequest {
     }
 
 
-    private class ResultCallBack implements Callback {
+    private static class ResultCallBack implements Callback {
         IViewNetCallBack abstractViewNetCallBack;
 
         ResultCallBack(IViewNetCallBack responseCallBack) {
@@ -199,12 +198,15 @@ public class NetManager implements IHttpNetRequest {
             try {
                 if (response.isSuccessful()) {
                     String body = response.body().string().trim();
-                    response.body().close();
                     abstractViewNetCallBack.dispatchResult(body);
-
                 }
             } catch (IOException | NullPointerException e) {
-                LogUtil.e("NullPointerException found:" + e.getMessage());
+                LogUtil.e("Exception found:" + e.getMessage());
+            } finally {
+                if (response.body() != null) {
+                    response.body().close();
+                }
+
             }
         }
     }
